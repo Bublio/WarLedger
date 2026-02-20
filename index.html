@@ -14,15 +14,15 @@
             --border-color: #2d2d3a;
         }
 
-        /* Light Mode Overrides */
+        /* Toned-down Light Mode (Soft Paper Palette) */
         body.light-mode {
-            --bg-dark: #f0f2f5; --sidebar-bg: #ffffff; --card-bg: #ffffff;
-            --text-main: #1a1a1a; --text-dim: #555555;
-            --border-color: #dddddd;
+            --bg-dark: #eef0f2;      /* Muted soft grey background */
+            --sidebar-bg: #e2e5e9;   /* Slightly darker sidebar */
+            --card-bg: #f9f9fb;      /* Off-white cards for gentle contrast */
+            --text-main: #2c3e50;    /* Deep charcoal instead of black */
+            --text-dim: #636e72;     /* Softer secondary text */
+            --border-color: #d1d8df; /* Subtle borders */
         }
-
-        body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(--text-main); margin: 0; display: flex; height: 100vh; overflow: hidden; transition: background 0.3s; }
-        
         /* SIDEBAR */
         .sidebar { width: 260px; background: var(--sidebar-bg); border-right: 1px solid var(--border-color); padding: 20px; flex-shrink: 0; display: flex; flex-direction: column; transition: background 0.3s; }
         .logo { color: var(--accent-gold); font-weight: bold; margin-bottom: 30px; font-size: 1.1rem; letter-spacing: 2px; text-align: center; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; }
@@ -359,3 +359,4 @@
     </script>
 </body>
 </html>
+
