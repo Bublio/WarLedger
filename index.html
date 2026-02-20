@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>War Ledger | Project Focus</title>
     <style>
         :root {
@@ -16,13 +18,16 @@
 
         /* Toned-down Light Mode (Soft Paper Palette) */
         body.light-mode {
-            --bg-dark: #eef0f2;      /* Muted soft grey background */
-            --sidebar-bg: #e2e5e9;   /* Slightly darker sidebar */
-            --card-bg: #f9f9fb;      /* Off-white cards for gentle contrast */
-            --text-main: #2c3e50;    /* Deep charcoal instead of black */
-            --text-dim: #636e72;     /* Softer secondary text */
-            --border-color: #d1d8df; /* Subtle borders */
+            --bg-dark: #eef0f2;      
+            --sidebar-bg: #e2e5e9;   
+            --card-bg: #f9f9fb;      
+            --text-main: #2c3e50;    
+            --text-dim: #636e72;     
+            --border-color: #d1d8df; 
         }
+
+        body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(--text-main); margin: 0; display: flex; height: 100vh; overflow: hidden; transition: background 0.3s; }
+        
         /* SIDEBAR */
         .sidebar { width: 260px; background: var(--sidebar-bg); border-right: 1px solid var(--border-color); padding: 20px; flex-shrink: 0; display: flex; flex-direction: column; transition: background 0.3s; }
         .logo { color: var(--accent-gold); font-weight: bold; margin-bottom: 30px; font-size: 1.1rem; letter-spacing: 2px; text-align: center; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; }
@@ -162,19 +167,27 @@
         let editingUnitIdx = null;
 
         window.onload = () => { 
-            if(localStorage.getItem('lightMode') === 'enabled') toggleTheme(true);
+            if(localStorage.getItem('lightMode') === 'enabled') {
+                toggleTheme(true);
+            }
             renderCompanyNav(); 
             updateDashboard(); 
         };
 
         function toggleTheme(initial = false) {
             const body = document.body;
-            const isLight = initial ? true : !body.classList.contains('light-mode');
+            let isLight;
+            
+            if (initial) {
+                isLight = true;
+            } else {
+                isLight = !body.classList.contains('light-mode');
+            }
             
             if (isLight) {
                 body.classList.add('light-mode');
                 document.getElementById('theme-text').innerText = "Switch to Dark Mode";
-                if(!initial) localStorage.setItem('lightMode', 'enabled');
+                localStorage.setItem('lightMode', 'enabled');
             } else {
                 body.classList.remove('light-mode');
                 document.getElementById('theme-text').innerText = "Switch to Light Mode";
@@ -214,7 +227,7 @@
             });
             const sorted = Object.values(muster).filter(m => m.name.toLowerCase().includes(search)).sort((a,b) => a.name.localeCompare(b.name));
             if (sorted.length === 0) { container.innerHTML = '<p>No units found.</p>'; return; }
-            let tableHTML = `<table class="muster-table" style="width:100%; border-collapse: collapse; margin-top: 10px;"><thead><tr style="text-align:left; color:#aaa; font-size: 0.7rem; text-transform: uppercase;"><th>Unit Name</th><th>Role</th><th>Squads</th><th>Models</th><th>Points</th></tr></thead><tbody>`;
+            let tableHTML = `<table style="width:100%; border-collapse: collapse; margin-top: 10px;"><thead><tr style="text-align:left; color:#aaa; font-size: 0.7rem; text-transform: uppercase;"><th>Unit Name</th><th>Role</th><th>Squads</th><th>Models</th><th>Points</th></tr></thead><tbody>`;
             sorted.forEach(m => { tableHTML += `<tr style="border-bottom: 1px solid var(--border-color); height: 45px;"><td style="font-weight:bold; color:var(--text-main);">${m.name}</td><td><span class="badge badge-${m.role}">${m.role.replace('_', ' ')}</span></td><td style="color:var(--text-main);">${m.squads}</td><td style="color:var(--accent-gold); font-weight:800;">${m.models}</td><td style="color:var(--text-main);">${m.pts}</td></tr>`; });
             container.innerHTML = tableHTML + `</tbody></table>`;
         }
@@ -359,4 +372,5 @@
     </script>
 </body>
 </html>
+
 
