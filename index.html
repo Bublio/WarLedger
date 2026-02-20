@@ -11,40 +11,48 @@
             
             --color-hero: #ff9f43; --color-character: #fb6340; --color-battleline: #2dce89; 
             --color-fire_support: #3498db; --color-close_support: #f1c40f; --color-vehicle: #8965e0;
+            --border-color: #2d2d3a;
         }
 
-        body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(--text-main); margin: 0; display: flex; height: 100vh; overflow: hidden; }
+        /* Light Mode Overrides */
+        body.light-mode {
+            --bg-dark: #f0f2f5; --sidebar-bg: #ffffff; --card-bg: #ffffff;
+            --text-main: #1a1a1a; --text-dim: #555555;
+            --border-color: #dddddd;
+        }
+
+        body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(--text-main); margin: 0; display: flex; height: 100vh; overflow: hidden; transition: background 0.3s; }
         
         /* SIDEBAR */
-        .sidebar { width: 260px; background: var(--sidebar-bg); border-right: 1px solid #333; padding: 20px; flex-shrink: 0; display: flex; flex-direction: column; }
-        .logo { color: var(--accent-gold); font-weight: bold; margin-bottom: 30px; font-size: 1.1rem; letter-spacing: 2px; text-align: center; border-bottom: 1px solid #333; padding-bottom: 20px; }
+        .sidebar { width: 260px; background: var(--sidebar-bg); border-right: 1px solid var(--border-color); padding: 20px; flex-shrink: 0; display: flex; flex-direction: column; transition: background 0.3s; }
+        .logo { color: var(--accent-gold); font-weight: bold; margin-bottom: 30px; font-size: 1.1rem; letter-spacing: 2px; text-align: center; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; }
         .nav-item { padding: 14px; color: var(--text-dim); border-radius: 12px; margin-bottom: 8px; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 12px; font-weight: 500; }
-        .nav-item.active { background: #25252f; color: white; border: 1px solid #3d3d4d; }
+        .nav-item.active { background: rgba(212, 160, 23, 0.1); color: var(--accent-gold); border: 1px solid var(--accent-gold); }
 
         .view { display: none; flex: 1; height: 100%; overflow-y: auto; padding: 40px; box-sizing: border-box; scroll-behavior: smooth; }
         .view.active { display: block; }
 
         /* DASHBOARD SUMMARY CARDS */
-        .summary-card { background: var(--card-bg); padding: 25px; border-radius: 20px; border: 1px solid #2d2d3a; cursor: pointer; transition: 0.3s; display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; }
+        .summary-card { background: var(--card-bg); padding: 25px; border-radius: 20px; border: 1px solid var(--border-color); cursor: pointer; transition: 0.3s; display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; }
         .summary-card:hover { border-color: var(--accent-gold); transform: translateY(-3px); }
         .summary-card h3 { margin: 0; font-size: 1.2rem; }
-        .summary-meta { font-size: 0.8rem; color: #bbb; margin-bottom: 15px; font-weight: 600; }
+        .summary-meta { font-size: 0.8rem; color: var(--text-dim); margin-bottom: 15px; font-weight: 600; }
 
         /* HEATMAP STYLES */
         .heatmap { display: flex; gap: 2px; height: 3px; margin: 8px 0; width: 100%; border-radius: 10px; overflow: hidden; }
-        .seg { flex: 1; background: #2d2d3a; transition: 0.3s; }
+        .seg { flex: 1; background: var(--border-color); transition: 0.3s; }
         .seg.owned { background: var(--bar-owned); }
         .seg.built { background: var(--bar-built); }
         .seg.primed { background: var(--bar-primed); }
         .seg.painted { background: var(--bar-painted); }
 
         /* GROUP HEADERS */
-        .group-header { font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 800; margin: 25px 0 10px 0; border-bottom: 1px solid #333; padding-bottom: 5px; display: flex; align-items: center; gap: 10px; grid-column: 1 / -1; }
+        .group-header { font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 800; margin: 25px 0 10px 0; border-bottom: 1px solid var(--border-color); padding-bottom: 5px; display: flex; align-items: center; gap: 10px; grid-column: 1 / -1; }
         .group-header span { color: #888; font-weight: 400; }
 
         .unit-grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; margin-bottom: 20px; }
 
-        .unit-card { background: var(--card-bg); border-radius: 12px; padding: 12px; border: 1px solid #2d2d3a; position: relative; display: flex; flex-direction: column; }
+        .unit-card { background: var(--card-bg); border-radius: 12px; padding: 12px; border: 1px solid var(--border-color); position: relative; display: flex; flex-direction: column; }
         .unit-card.focused { border-color: var(--accent-gold); box-shadow: 0 0 10px rgba(212, 160, 23, 0.1); }
         .unit-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 5px; }
         .unit-name { font-size: 1rem; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px; display: inline-block; }
@@ -58,32 +66,33 @@
         .badge-close_support { background: rgba(241, 196, 15, 0.1); color: var(--color-close_support); }
         .badge-vehicle { background: rgba(137, 101, 224, 0.1); color: var(--color-vehicle); }
 
-        /* Context Tag for Projects */
         .comp-context { font-size: 0.55rem; color: var(--accent-gold); font-weight: 900; text-transform: uppercase; margin-bottom: 4px; display: block; opacity: 0.8; }
 
         .stat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-bottom: 30px; }
-        .widget { background: linear-gradient(145deg, #1c1c24, #16161d); padding: 15px; border-radius: 15px; border: 1px solid #2d2d3a; display: flex; flex-direction: column; }
-        .widget-val { font-size: 1.15rem; font-weight: 900; color: white; margin-bottom: 2px; }
+        .widget { background: var(--card-bg); padding: 15px; border-radius: 15px; border: 1px solid var(--border-color); display: flex; flex-direction: column; }
+        .widget-val { font-size: 1.15rem; font-weight: 900; color: var(--text-main); margin-bottom: 2px; }
         .widget-label { font-size: 0.55rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; font-weight: 800; }
         .w-pts { border-left: 3px solid var(--bar-painted); }
         .w-val { border-left: 3px solid var(--bar-owned); }
         .w-eff { border-left: 3px solid #636e72; }
 
-        .hobby-row { display: flex; justify-content: space-between; padding-top: 8px; border-top: 1px solid #2d2d3a; margin-top: auto; }
+        .hobby-row { display: flex; justify-content: space-between; padding-top: 8px; border-top: 1px solid var(--border-color); margin-top: auto; }
         .hobby-item { font-size: 0.7rem; color: var(--text-dim); display: flex; align-items: center; gap: 4px; cursor: pointer; }
         
         .btn-gold { background: var(--accent-gold); color: #000; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 900; cursor: pointer; text-transform: uppercase; font-size: 0.75rem; }
         .input-panel { background: var(--sidebar-bg); padding: 25px; border-radius: 15px; border: 2px solid var(--accent-gold); margin-bottom: 30px; display: none; }
-        input, select { background: #2a2a2a; border: 1px solid #444; color: white; padding: 10px; margin: 5px; border-radius: 6px; }
+        input, select { background: var(--bg-dark); border: 1px solid var(--border-color); color: var(--text-main); padding: 10px; margin: 5px; border-radius: 6px; }
         .action-btn { background: none; border: none; color: #777; cursor: pointer; transition: 0.2s; font-size: 0.9rem; margin-left: 4px; padding: 2px; }
         .action-btn.active-star { color: var(--accent-gold); opacity: 1; }
         
         .comp-nav-item { padding: 10px; border-radius: 8px; cursor: pointer; color: var(--text-dim); margin-bottom: 8px; display: flex; align-items: center; transition: 0.2s; border: 1px solid transparent; }
-        .comp-nav-item.active { color: white; background: #1c1c24; border-color: #3d3d4d; }
+        .comp-nav-item.active { color: var(--text-main); background: var(--bg-dark); border-color: var(--border-color); }
         
-        .data-box { margin-top: auto; border-top: 1px solid #333; padding-top: 20px; }
-        .data-btn { background: #25252f; color: var(--text-dim); border: 1px solid #3d3d4d; width: 100%; padding: 8px; border-radius: 6px; font-size: 0.65rem; text-transform: uppercase; cursor: pointer; margin-bottom: 5px; font-weight: bold; }
+        .data-box { margin-top: auto; border-top: 1px solid var(--border-color); padding-top: 20px; }
+        .data-btn { background: var(--bg-dark); color: var(--text-dim); border: 1px solid var(--border-color); width: 100%; padding: 8px; border-radius: 6px; font-size: 0.65rem; text-transform: uppercase; cursor: pointer; margin-bottom: 5px; font-weight: bold; }
         .bar-label { display:flex; justify-content:space-between; font-size:0.6rem; font-weight:800; color:#aaa; text-transform:uppercase; }
+
+        .theme-toggle { display: flex; align-items: center; gap: 10px; font-size: 0.65rem; font-weight: bold; color: var(--text-dim); cursor: pointer; margin-top: 15px; padding: 5px 10px; border-radius: 5px; border: 1px solid var(--border-color); }
     </style>
 </head>
 <body>
@@ -93,7 +102,7 @@
         <div id="nav-dash" class="nav-item active" onclick="switchView('dashboard', this)">📂 Dashboard</div>
         <div id="nav-muster" class="nav-item" onclick="switchView('muster', this)">📜 Master Muster</div>
         <div id="nav-comp" class="nav-item" onclick="switchView('companies', this)">🛡️ Companies</div>
-        <div style="margin-top: 30px; overflow-y: auto; max-height: 40vh;">
+        <div style="margin-top: 30px; overflow-y: auto; max-height: 35vh;">
             <p style="font-size: 0.65rem; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-left: 10px;">Deployments</p>
             <div id="comp-nav"></div>
             <button onclick="createNewCompany()" style="background:none; color:var(--accent-gold); border:1px dashed #444; width:100%; padding:10px; border-radius:8px; cursor:pointer; margin-top:10px;">+ New Company</button>
@@ -101,6 +110,7 @@
         <div class="data-box">
             <button class="data-btn" onclick="exportData()">📤 Backup Army (Copy)</button>
             <button class="data-btn" onclick="importData()">📥 Restore Army (Paste)</button>
+            <div class="theme-toggle" onclick="toggleTheme()">🌓 <span id="theme-text">Switch to Light Mode</span></div>
         </div>
     </div>
 
@@ -119,7 +129,7 @@
 
     <div id="muster" class="view">
         <h1>Master Muster</h1>
-        <input type="text" id="musterSearch" style="background: #1c1c24; border: 1px solid #2d2d3a; color: white; padding: 12px 20px; border-radius: 10px; width: 100%; max-width: 400px; margin-bottom: 20px; font-size: 0.9rem; outline: none;" placeholder="Search by unit name..." onkeyup="renderMuster()">
+        <input type="text" id="musterSearch" style="background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-main); padding: 12px 20px; border-radius: 10px; width: 100%; max-width: 400px; margin-bottom: 20px; font-size: 0.9rem; outline: none;" placeholder="Search by unit name..." onkeyup="renderMuster()">
         <div id="muster-container"></div>
     </div>
 
@@ -140,7 +150,7 @@
                 <input type="number" id="uPts" placeholder="Pts" style="width:80px">
                 <input type="number" id="uCost" placeholder="$" style="width:80px">
                 <button class="btn-gold" onclick="saveUnit()">Confirm</button>
-                <button onclick="togglePanel(false)" style="background:none; color:white; border:none; cursor:pointer;">Cancel</button>
+                <button onclick="togglePanel(false)" style="background:none; color:var(--text-main); border:none; cursor:pointer;">Cancel</button>
             </div>
             <div id="unitContainer"></div>
         </div>
@@ -151,7 +161,26 @@
         let activeIdx = null;
         let editingUnitIdx = null;
 
-        window.onload = () => { renderCompanyNav(); updateDashboard(); };
+        window.onload = () => { 
+            if(localStorage.getItem('lightMode') === 'enabled') toggleTheme(true);
+            renderCompanyNav(); 
+            updateDashboard(); 
+        };
+
+        function toggleTheme(initial = false) {
+            const body = document.body;
+            const isLight = initial ? true : !body.classList.contains('light-mode');
+            
+            if (isLight) {
+                body.classList.add('light-mode');
+                document.getElementById('theme-text').innerText = "Switch to Dark Mode";
+                if(!initial) localStorage.setItem('lightMode', 'enabled');
+            } else {
+                body.classList.remove('light-mode');
+                document.getElementById('theme-text').innerText = "Switch to Light Mode";
+                localStorage.setItem('lightMode', 'disabled');
+            }
+        }
 
         function save() { 
             localStorage.setItem('warLedgerData', JSON.stringify(army)); 
@@ -186,11 +215,10 @@
             const sorted = Object.values(muster).filter(m => m.name.toLowerCase().includes(search)).sort((a,b) => a.name.localeCompare(b.name));
             if (sorted.length === 0) { container.innerHTML = '<p>No units found.</p>'; return; }
             let tableHTML = `<table class="muster-table" style="width:100%; border-collapse: collapse; margin-top: 10px;"><thead><tr style="text-align:left; color:#aaa; font-size: 0.7rem; text-transform: uppercase;"><th>Unit Name</th><th>Role</th><th>Squads</th><th>Models</th><th>Points</th></tr></thead><tbody>`;
-            sorted.forEach(m => { tableHTML += `<tr style="border-bottom: 1px solid #2d2d3a; height: 45px;"><td style="font-weight:bold; color:white;">${m.name}</td><td><span class="badge badge-${m.role}">${m.role.replace('_', ' ')}</span></td><td style="color:#eee;">${m.squads}</td><td style="color:var(--accent-gold); font-weight:800;">${m.models}</td><td style="color:#eee;">${m.pts}</td></tr>`; });
+            sorted.forEach(m => { tableHTML += `<tr style="border-bottom: 1px solid var(--border-color); height: 45px;"><td style="font-weight:bold; color:var(--text-main);">${m.name}</td><td><span class="badge badge-${m.role}">${m.role.replace('_', ' ')}</span></td><td style="color:var(--text-main);">${m.squads}</td><td style="color:var(--accent-gold); font-weight:800;">${m.models}</td><td style="color:var(--text-main);">${m.pts}</td></tr>`; });
             container.innerHTML = tableHTML + `</tbody></table>`;
         }
 
-        // Shared Unit Card Generator - Added compName for Focus View
         function createUnitCardHTML(u, cIdx, uIdx, hideActions = false, compName = "") {
             const ppp = u.pts > 0 ? (u.cost / u.pts).toFixed(2) : "0.00";
             return `
@@ -294,7 +322,7 @@
                 <div class="widget w-painted"><span class="widget-val">${s.painted}<small style="color:#888; font-size:0.7rem;">/${s.total}</small></span><span class="widget-label">Painted</span></div>`; 
         }
 
-        function renderBar(l, v, t, c) { const p = t > 0 ? Math.round((v/t)*100) : 0; return `<div style="margin-bottom:8px;"><div class="bar-label"><span>${l}</span><span>${p}%</span></div><div style="background:#0a0a0c; height:5px; border-radius:10px; overflow:hidden; margin-top:3px;"><div style="width:${p}%; background:${c}; height:100%;"></div></div></div>`; }
+        function renderBar(l, v, t, c) { const p = t > 0 ? Math.round((v/t)*100) : 0; return `<div style="margin-bottom:8px;"><div class="bar-label"><span>${l}</span><span>${p}%</span></div><div style="background:var(--bg-dark); height:5px; border-radius:10px; overflow:hidden; margin-top:3px;"><div style="width:${p}%; background:${c}; height:100%;"></div></div></div>`; }
         function duplicateUnit(i) { const clone = JSON.parse(JSON.stringify(army[activeIdx].units[i])); army[activeIdx].units.push(clone); save(); }
         function editUnit(i) { editingUnitIdx = i; const u = army[activeIdx].units[i]; document.getElementById('uName').value = u.name; document.getElementById('uRole').value = u.role; document.getElementById('uModels').value = u.models; document.getElementById('uPts').value = u.pts; document.getElementById('uCost').value = u.cost; togglePanel(true); document.getElementById('companies').scrollTo({ top: 0, behavior: 'smooth' }); document.getElementById('uName').focus(); }
         function openPanel() { editingUnitIdx = null; document.getElementById('uName').value = ''; ['uModels','uPts','uCost'].forEach(id => document.getElementById(id).value = ''); togglePanel(true); document.getElementById('companies').scrollTo({ top: 0, behavior: 'smooth' }); document.getElementById('uName').focus(); }
@@ -305,8 +333,8 @@
                 const div = document.createElement('div'); div.className = `comp-nav-item ${activeIdx === i ? 'active' : ''}`; 
                 div.innerHTML = `
                     <div style="display:flex; flex-direction:column; margin-right:10px; opacity:0.3;">
-                        <button onclick="moveCompany(${i}, -1, event)" style="background:none; border:none; color:white; font-size:0.6rem; cursor:pointer; padding:0;">▲</button>
-                        <button onclick="moveCompany(${i}, 1, event)" style="background:none; border:none; color:white; font-size:0.6rem; cursor:pointer; padding:0;">▼</button>
+                        <button onclick="moveCompany(${i}, -1, event)" style="background:none; border:none; color:var(--text-main); font-size:0.6rem; cursor:pointer; padding:0;">▲</button>
+                        <button onclick="moveCompany(${i}, 1, event)" style="background:none; border:none; color:var(--text-main); font-size:0.6rem; cursor:pointer; padding:0;">▼</button>
                     </div>
                     <span style="flex:1; cursor:pointer;" onclick="selectCompany(${i})">${c.name}</span>
                     <div style="display:flex; gap:10px; align-items:center;">
